@@ -8,24 +8,6 @@ orbs:
 jobs:
   deploy-application:
     executor: aws-eks/python3
-    parameters:
-      cluster-name:
-        description: |
-          Name of the EKS cluster
-        type: string
-      docker-image-name:
-        description: |
-          Name of the docker image to be deployed
-        type: string
-      version-info:
-        description: |
-          App version information
-        type: string
-      aws-region:
-        description: |
-          AWS region
-        type: string
-        default: ""
     steps:
       - checkout
 
@@ -34,5 +16,5 @@ workflows:
   deployment:
     jobs:
       # list jobs and parameters
-      - deploy-application:
+      - deploy-application
 
