@@ -7,7 +7,8 @@ orbs:
 
 jobs:
   deploy-application:
-    executor: aws-eks/default
+    docker:
+      - image: cimg/python:3.10
     parameters:
       cluster-name:
         description: |
@@ -58,14 +59,21 @@ jobs:
           sudo mv kubectl /usr/local/bin/kubectl
 
       - run: kubectl version --client # Verify installation
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: << parameters.cluster-name >>
-          install-kubectl: true
-          aws-region: << parameters.aws-region >>
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "deployment/circle-k8s-deployment.yaml"
-          get-rollout-status: true
-          resource-name: deployment/demo-circle-k8s
+      - aws-eks/update_kubeconfig_with_authenticator:
+          cluster_name: << parameters.cluster_name >>
+          install_kubectl: true
+      - kubernetes/create_or_update_resource:
+          get_rollout_status: true
+          resource_file_path: deployment/circle-k8s-deployment.yaml
+          resource_name: deployment/demo-circle-k8s
+      # - aws-eks/update-kubeconfig-with-authenticator:
+      #     cluster-name: << parameters.cluster-name >>
+      #     install-kubectl: true
+      #     aws-region: << parameters.aws-region >>
+      # - kubernetes/create-or-update-resource:
+      #     resource-file-path: "deployment/circle-k8s-deployment.yaml"
+      #     get-rollout-status: true
+      #     resource-name: deployment/demo-circle-k8s
 
 workflows:
   version: 2
