@@ -60,8 +60,8 @@ jobs:
       # - run: kubectl version --client # Verify installation
       - kubernetes/install_kubectl
       - kubernetes/create_or_update_resource:
-          resource_file_path: "tests/nginx-deployment/deployment.yaml"
-          resource_name: "deployment/nginx-deployment"
+          resource_file_path: "deployment/circle-k8s-deployment.yaml"
+          resource_name: "deployment/demo-circle-k8s"
           get_rollout_status: true            
           show_kubectl_command: true
       # - aws-eks/update_kubeconfig_with_authenticator:
