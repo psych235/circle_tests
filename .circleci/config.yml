@@ -96,5 +96,5 @@ workflows:
       - deploy-application:
           cluster-name: unique-disco-badger
           aws-region: $AWS_DEFAULT_REGION
-          docker-image-name: "${DOCKERHUB_USERNAME}/circle-k8s:latest"
+          docker-image-name: "mbongorno/circle-k8s:latest"
           version-info: "${CIRCLE_SHA1}"
