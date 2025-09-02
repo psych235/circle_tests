@@ -50,7 +50,7 @@ jobs:
                 g;s|BUILD_DATE_VALUE|$BUILD_DATE|g;s|VERSION_INFO_VALUE|\
                 << parameters.version-info >>|g" > deployment/circle-k8s-deployment.yaml
       
-      - run: ls deployment
+      - run: cat deployment/circle-k8s-deployment.yaml
 
 workflows:
   version: 2
