@@ -67,13 +67,15 @@ jobs:
       - aws-eks/update_kubeconfig_with_authenticator:
           cluster_name: << parameters.cluster-name >>
           install_kubectl: true
+
       - kubernetes/create_or_update_resource:
           resource_file_path: "deployment/circle-k8s-deployment.yaml"
           resource_name: "deployment/demo-circle-k8s"
           get_rollout_status: true            
           show_kubectl_command: true
-      - kubernetes/create-or-update-resource:
-          resource-file-path: "deployment/circle-k8s-service.yaml"
+
+      - kubernetes/create_or_update_resource:
+          resource_file_path: "deployment/circle-k8s-service.yaml"
       # - aws-eks/update_kubeconfig_with_authenticator:
       #     cluster_name: << parameters.cluster-name >>
       #     install_kubectl: true
