@@ -52,9 +52,15 @@ jobs:
       
       - run: cat deployment/circle-k8s-deployment.yaml
 
+      - run: |
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/kubectl
+
+      - run: kubectl version --client # Verify installation
+
       - kubernetes/create-or-update-resource:
           resource-file-path: "deployment/circle-k8s-deployment.yaml"
-          include-kubectl: true
           get-rollout-status: true
           resource-name: deployment/demo-circle-k8s
 
