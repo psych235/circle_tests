@@ -51,6 +51,11 @@ jobs:
                 << parameters.version-info >>|g" > deployment/circle-k8s-deployment.yaml
       
       - run: cat deployment/circle-k8s-deployment.yaml
+      
+      - kubernetes/create-or-update-resource:
+          resource-file-path: "deployment/demo-app-deployment.yaml"
+          get-rollout-status: true
+          resource-name: deployment/demo-circle-k8s
 
 workflows:
   version: 2
