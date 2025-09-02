@@ -48,7 +48,9 @@ jobs:
             cat deployment/circle-k8s-deployment.yaml.template |\
                sed "s|DOCKER_IMAGE_NAME|<< parameters.docker-image-name >>|\
                 g;s|BUILD_DATE_VALUE|$BUILD_DATE|g;s|VERSION_INFO_VALUE|\
-                << parameters.version-info >>|g" > deployment/demo-app-deployment.yaml
+                << parameters.version-info >>|g" > deployment/circle-k8s-deployment.yaml
+      
+      - run: echo "Hello world"
 
 workflows:
   version: 2
