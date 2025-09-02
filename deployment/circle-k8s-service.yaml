@@ -6,7 +6,7 @@ metadata:
     app: demo
 spec:
   # automatically create an external load-balanced IP for the service.
-  # type: LoadBalancer
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 80
