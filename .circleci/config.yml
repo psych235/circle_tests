@@ -7,7 +7,7 @@ orbs:
 
 jobs:
   deploy-application:
-    executor: aws-eks/python3
+    executor: aws-eks/default
     parameters:
       cluster-name:
         description: |
