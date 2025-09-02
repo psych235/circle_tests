@@ -8,6 +8,24 @@ orbs:
 jobs:
   deploy-application:
     executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+      docker-image-name:
+        description: |
+          Name of the docker image to be deployed
+        type: string
+      version-info:
+        description: |
+          App version information
+        type: string
+      aws-region:
+        description: |
+          AWS region
+        type: string
+        default: ""
     steps:
       - checkout
       - setup_remote_docker:
@@ -20,11 +38,25 @@ jobs:
             echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push $DOCKERHUB_USERNAME/circleci-k8s:$TAG
 
+      - run:
+          name: Create deployment manifest
+          command: |
+            # Replace the placeholders in the manifest with the intended values.
+            # This is to avoid hardcoding the image name in the manifest, to make this
+            # demo project more portable.
+            BUILD_DATE=$(date '+%Y%m%d%H%M%S')
+            cat deployment/circle-k8s-deployment.yaml.template |\
+               sed "s|DOCKER_IMAGE_NAME|<< parameters.docker-image-name >>|\
+                g;s|BUILD_DATE_VALUE|$BUILD_DATE|g;s|VERSION_INFO_VALUE|\
+                << parameters.version-info >>|g" > deployment/demo-app-deployment.yaml
 
 workflows:
   version: 2
   deployment:
     jobs:
       # list jobs and parameters
-      - deploy-application
-
+      - deploy-application:
+          cluster-name: unique-disco-badger
+          aws-region: $AWS_DEFAULT_REGION
+          docker-image-name: "${DOCKERHUB_USERNAME}/circle-k8s:latest"
+          version-info: "${CIRCLE_SHA1}"
