@@ -58,7 +58,10 @@ jobs:
       #     sudo mv kubectl /usr/local/bin/kubectl
 
       # - run: kubectl version --client # Verify installation
-      - kubernetes/install_kubectl
+      # - kubernetes/install_kubectl
+      - aws-eks/update_kubeconfig_with_authenticator:
+          cluster_name: << parameters.cluster-name >>
+          install_kubectl: true
       - kubernetes/create_or_update_resource:
           resource_file_path: "deployment/circle-k8s-deployment.yaml"
           resource_name: "deployment/demo-circle-k8s"
