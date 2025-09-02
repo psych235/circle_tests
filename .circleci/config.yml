@@ -10,6 +10,16 @@ jobs:
     executor: aws-eks/python3
     steps:
       - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build and Push application Docker image test
+          command: |
+            TAG=0.1.$CIRCLE_BUILD_NUM
+            docker build -t $DOCKERHUB_USERNAME/circleci-k8s:$TAG .
+            echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
+            docker push $DOCKERHUB_USERNAME/circleci-k8s:$TAG
+
 
 workflows:
   version: 2
