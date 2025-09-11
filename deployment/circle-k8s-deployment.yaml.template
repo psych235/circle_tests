@@ -24,7 +24,7 @@ spec:
           value: "BUILD_DATE_VALUE"
         ports:
         - containerPort: 8080
-      - name: maria_db
+      - name: maria-db
         image: mariadb:latest
         env:
         - name: MARIADB_ROOT_PASSWORD
